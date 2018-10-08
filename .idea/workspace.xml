@@ -2,30 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6bd45463-9523-40a9-bb88-9b038d5e0695" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/cloud-service-consumer-80/src/main/java/com/qpf/springcloud/Consumer_80_Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-service-consumer-80/src/main/java/com/qpf/springcloud/config/CloudConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-service-consumer-80/src/main/java/com/qpf/springcloud/controller/DepartmentConsumerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cloud-service-consumer-80/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7352bf5e-5ce3-4892-877b-bb0af83273f8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7352bf5e-5ce3-4892-877b-bb0af83273f8/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bb6c85e0-5deb-4b5f-9b74-d25910406e58.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bb6c85e0-5deb-4b5f-9b74-d25910406e58/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-api/cloud-service-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-api/cloud-service-api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/cloud-service-provider-dept-8001.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/cloud-service-provider-dept-8001.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/src/main/java/com/qpf/springcloud/controller/DepartmentProviderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/src/main/java/com/qpf/springcloud/controller/DepartmentProviderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/src/main/resources/mybatis/mapper/departmentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/src/main/resources/mybatis/mapper/departmentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/com/qpf/springcloud/controller/DepartmentProviderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/com/qpf/springcloud/controller/DepartmentProviderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/data/demo.db" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/data/demo.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/mybatis/mapper/departmentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cloud-service-provider-dept-8001/target/classes/mybatis/mapper/departmentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cloud-service/cloud-service.iml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/cloud-service-api/target/" />
@@ -45,7 +22,7 @@
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -304,12 +281,12 @@
       <option name="presentableId" value="Default" />
       <updated>1539004800509</updated>
       <workItem from="1539004809192" duration="964000" />
-      <workItem from="1539006016309" duration="3673000" />
+      <workItem from="1539006016309" duration="3873000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4637000" />
+    <option name="totallyTimeSpent" value="4837000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
@@ -453,7 +430,7 @@
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
