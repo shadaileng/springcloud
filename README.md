@@ -1,6 +1,6 @@
 # <center>Spring Cloud</center>
 
-[TOC]
+[toc]
 
 # 一、引言
 
@@ -30,7 +30,7 @@
 8. `Eureka`和`zookeeper`都可以提供服务注册与发现功能,两者的区别是什么
 
 # 二、微服务概述
-
+    
 > 就目前而言,对于微服务业界并没有一个统一的标准定义
 
 > 一般来说,微服务是一种架构模式或是一种架构风格.==它提倡将单一应用程序划分为一组小的服务==,每个服务运行在其==独立的进程==中,服务之间互相协调,互相配合,为用户提供最终的价值.服务之间采用轻量级的通信机制互相沟通(通常是基于`HTTP`的`Restful API`).每个服务围绕具体的业务构建,并且能够独立部署到生产环境.另外,应该尽量避免统一的、集中式的服务管理机制,对具体的一个服务而言,应该根据业务上下文,选择合适的语言和工具对其构建,可以使用一个轻量级的集中式管理来协调这些服务.可以使用不同的语言来编写服务,也可以使用不同的数据存储.
@@ -73,23 +73,23 @@
 
 微服务技术栈是多种技术的集合
 
-| 微服务条目       | 技术                                      | 备注 |
-| ---------------- | ----------------------------------------- | ---- |
-| 服务开发         | `springboot`,`Spring`,`SpringMVC`         |      |
-| 服务配置与管理   | `Netflix`公司的`Archaius`,阿里的`Diamond` |      |
-| 服务注册与发现   | `Rureka`,`Consul`,`Zookeeper`             |      |
-| 服务调用         | `Rest`,`RPC`, `gRPC`                      |      |
-| 服务融断器       | `Hystrix`,`Envoy`                         |      |
-| 负载均衡         | `Ribbon`,`Nginx`                          |      |
-| 服务接口调用     | `Feign`                                   |      |
-| 消息队列         | `Kafka`,`RabbitMQ`,`ActiveMQ`             |      |
-| 服务配置中心管理 | `SpringCloudConfig`,`Chef`                |      |
-| 服务路由         | `Zuul`                                    |      |
-| 服务监控         | `Zabbix`, `Nagios`, `Metrics`,`Spectator` |      |
-| 全链路追踪       | `Zipkin`,`Brave`,`Dapper`                 |      |
-| 服务部署         | `Docker`,`OpenStack`,`Kubernetes`         |      |
-| 数据流操作开发包 | `SpringCloudStream`                       |      |
-| 事件消息总线     | `SpringCloudBus`                          |      |
+微服务条目 | 技术 | 备注
+---|---|---
+服务开发| `springboot`,`Spring`,`SpringMVC`|
+服务配置与管理|`Netflix`公司的`Archaius`,阿里的`Diamond`|
+服务注册与发现|`Rureka`,`Consul`,`Zookeeper`|
+服务调用|`Rest`,`RPC`, `gRPC`|
+服务融断器|`Hystrix`,`Envoy`|
+负载均衡|`Ribbon`,`Nginx`|
+服务接口调用|`Feign`|
+消息队列|`Kafka`,`RabbitMQ`,`ActiveMQ`|
+服务配置中心管理|`SpringCloudConfig`,`Chef`|
+服务路由|`Zuul`|
+服务监控|`Zabbix`, `Nagios`, `Metrics`,`Spectator`|
+全链路追踪|`Zipkin`,`Brave`,`Dapper`|
+服务部署|`Docker`,`OpenStack`,`Kubernetes`|
+数据流操作开发包|`SpringCloudStream`|
+事件消息总线|`SpringCloudBus`
 
 ## 4 为什么选择Spring Cloud
 
@@ -168,89 +168,117 @@
 
 # 四、微服务环境搭建
 
-> Maven分包
-
-父工程`microservicecloud`之下有3个子工程:
-- `microservicecloud-api`: 封装`Entity/接口/公共配置`
-- `microservicecloud-provider-dept-8001`: 服务提供者
-- `microservicecloud-consumer-dept-80`: 服务消费者
+父工程`cloud-service`之下有3个子工程:
+- `cloud-service-api`: 封装`Entity/接口/公共配置`
+- `cloud-service-provider-dept-8001`: 服务提供者
+- `cloud-service-consumer-dept-80`: 服务消费者
 
 ## 1 创建父工程:
 
-- 创建工程: `Maven Project` ==> `group Id: com.qpf.cloud` ==> `artifact Id: microservicecloud` ==> `packaging: pom` ==> `Finish`
+- 创建工程: `Maven Project` ==> `group Id: com.qpf.springcloud` ==> `artifact Id: cloud-service` ==> `packaging: pom` ==> `Finish`
 
 - 编辑`pom.xml`文件,提取子模块依赖
 ```
-<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8<maven.compiler.target>
-    <junit.version>4.12</junit.version>
-    <log4j.version>1.2.17</log4j.version>
-    <lombok.version>1.16.18</lombok.version>
-</properties>
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <type>pom</type>
-            <version>Dalston.SR1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring.boot.dependencies</artifactId>
-            <type>pom</type>
-            <version>1.5.9.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.31</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
+    <groupId>com.qpf.springcloud</groupId>
+    <artifactId>cloud-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <lombok.version>1.16.18</lombok.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>1.5.13.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.0.31</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
 ```
 
 ## 2 创建公共子模块`microservicecloud-api`
 
-- 创建工程: `Maven Module` ==> `group Id: com.qpf.microservicecloud` ==> `artifact Id: microservicecloud-api` ==> `packaging: jar` ==> `Finish`
+- 创建工程: `Maven Module` ==> `Paren Project: cloud-service` ==> `artifact Id: microservicecloud-api` ==> `packaging: jar` ==> `Finish`
 - 编写`pom.xml`文件
 
 ```
-<dependencies>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-    </dependency>
-</dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cloud-service</artifactId>
+        <groupId>com.qpf.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../cloud-service/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-service-api</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+</project>
 ```
 
 - 编写实体类`Entity`,并结合`lombok`生成成员方法,实体类必须序列化
@@ -271,57 +299,85 @@ public class Department implements Serializable {
 
 ## 3 创建`Provider`工程
 
-- 创建工程: `Maven Module` ==> `group Id: com.qpf.microservicecloud` ==> `artifact Id: microservicecloud-provider-dept-8001` ==> `packaging: jar` ==> `Finish`
+- 创建工程: `Maven Module` ==> `Paren Project: cloud-service` ==> `artifact Id: cloud-service-provider-dept-8001` ==> `packaging: jar` ==> `Finish`
 - 编写`pom.xml`文件
 
 ```
-<dependencies>
-    <dependency>
-        <groupId>com.qpf.microservicecloud</groupId>
-        <artifactId>microservicecloud-api</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>druid</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-core</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.mybatis.spring.boot</groupId>
-        <artifactId>mybatis-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-jetty</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>springloaded</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-devtools</artifactId>
-    </dependency>
-</dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cloud-service</artifactId>
+        <groupId>com.qpf.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../cloud-service/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-service-provider-dept-8001</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qpf.springcloud</groupId>
+            <artifactId>cloud-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+            <version>1.2.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+    </dependencies>
+</project>
 ```
 
 - 编写配置文件`application.yaml`
@@ -356,9 +412,10 @@ spring:
 <!DOCTYPE configuration
     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
 <configuration>
     <settings>
-        <setting name="cacheEnable" value="true"></setting>
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 </configuration>
 ```
@@ -384,6 +441,7 @@ SELECT * FROM department;
 - 创建`dao`接口,添加`@Mapper`注解
 
 ```
+@Mapper
 public interface DepartmentDao {
     public boolean addDepartment(Department department);
     public Department findById(Long id);
@@ -398,15 +456,16 @@ public interface DepartmentDao {
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qpf.springcloud.dao.DepartmentDao">
+
+<mapper namespace="com.qpf.springcloud.repository.DepartmentDao">
     <select id="findById" resultType="Department" parameterType="Long">
-        SELECT id, name, db_source FROM department WHERE id=#{id};
+        SELECT id, name, db_source FROM department WHERE id = #{id};
     </select>
     <select id="findAll" resultType="Department">
         SELECT id, name, db_source FROM department;
     </select>
     <insert id="addDepartment" parameterType="Department">
-        INSERT INTO department(name, db_source) VALUES(#{name}, DATABASE());
+        INSERT INTO department(name, db_source) VALUES (#{name}, #{db_source});
     </insert>
 </mapper>
 ```
@@ -420,19 +479,25 @@ public interface DepartmentService{
     public Department get(Long id);
     public List<Department> list();
 }
+
 # com.qpf.springcloud.service.impl
 @Service
-public class DepartmentServiceImpl{
+public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
-    private DepartmentDao dao;
-    public boolean add(Department department){
-        return dao.addDepartment(department);
+    private DepartmentDao departmentDao;
+    @Override
+    public boolean add(Department department) {
+        return departmentDao.addDepartment(department);
     }
-    public Department get(Long id){
-        return dao.findById(id);
+
+    @Override
+    public Department get(Long id) {
+        return departmentDao.findById(id);
     }
-    public List<Department> list(){
-        return dao.findAll();
+
+    @Override
+    public List<Department> list() {
+        return departmentDao.findAll();
     }
 }
 ```
@@ -441,20 +506,20 @@ public class DepartmentServiceImpl{
 
 ```
 @RestController
-public class DepartmentController{
+public class DepartmentProviderController {
     @Autowired
     private DepartmentService service;
-    
-    @PostMapping("/dept/add")
+
+    @RequestMapping(value = "/dept/add", method = RequestMethod.POST)
     public boolean add(@RequestBody Department department) {
         return service.add(department);
     }
-    
+
     @GetMapping("/dept/get/{id}")
     public Department get(@PathVariable("id") Long id) {
         return service.get(id);
     }
-    
+
     @GetMapping("/dept/list")
     public List<Department> list() {
         return service.list();
@@ -466,9 +531,9 @@ public class DepartmentController{
 
 ```
 @SpringBootApplication
-public class Department_Provider_8001_App {
-    public static void main(String[] args){
-        SpringApplication.run(Department_Provider_8001_App.class, args);
+public class Provider_8001_Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Provider_8001_Application.class, args);
     }
 }
 ```
@@ -476,33 +541,48 @@ public class Department_Provider_8001_App {
 
 ## 4 创建`Consumer`工程
 
-- 创建工程: `Maven Module` ==> `group Id: com.qpf.microservicecloud` ==> `artifact Id: microservicecloud-consumer-dept-80` ==> `packaging: jar` ==> `Finish`
+- 创建工程: `Maven Module` ==> `Parent Project: cloud-service` ==> `artifact Id: cloud-service-consumer-80` ==> `packaging: jar` ==> `Finish`
 - 编写`pom.xml`文件
 
 ```
-<dependencies>
-    <dependency>
-        <groupId>com.qpf.microservicecloud</groupId>
-        <artifactId>microservicecloud-api</artifactId>
-        <version>${project.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>springloaded</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-devtools</artifactId>
-    </dependency>
-</dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cloud-service</artifactId>
+        <groupId>com.qpf.springcloud</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../cloud-service/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud-service-consumer-80</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.qpf.springcloud</groupId>
+            <artifactId>cloud-service-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+    </dependencies>
+</project>
 ```
 
 - 编写配置文件`application.yaml`
@@ -514,6 +594,8 @@ server:
 
 - `Spring`容器中添加`RestTemplate`组件
 
+> `RestTemplate`是远程访问`REST`服务的客户端模板工具集
+
 ```
 @Configuration
 public class CloudConfig{
@@ -524,30 +606,30 @@ public class CloudConfig{
 }
 ```
 
-> `RestTemplate`是远程访问`REST`服务的客户端模板工具集
-
 - 创建`Controller`,使用`RestTemplate`消费服务
 
 ```
 @RestController
-public class DepartmentConsumer_Controller{
+public class DepartmentConsumerController {
     @Autowired
     private RestTemplate restTemplate;
-    
+
     private static final String REST_URL_PREFIX = "http://localhost:8001";
-    
-    @PostMapper("/consumer/dept/add")
-    public boolean add(@RequestBody Department department){
-        return restTemplate.postForObject(REST_URL_PREFIX + "/dept/add", department, Bealean.class);
+
+    @GetMapping("/dept/add")
+    public boolean add(Department department) {
+        System.out.println("department: " + department);
+        return restTemplate.postForObject(REST_URL_PREFIX + "/dept/add", department, Boolean.class);
     }
-    
-    @GetMapper("/consumer/dept/get/{id}")
-    public Department get(@PathVariable Long id){
+
+    @GetMapping("/dept/get/{id}")
+    public Department get(@PathVariable("id") Long id){
         return restTemplate.getForObject(REST_URL_PREFIX + "/dept/get/" + id, Department.class);
     }
-    
-    @GetMapper("/consumer/dept/list")
-    public List<Department> list(@PathVariable Long id){
+
+    @SuppressWarnings("unchecked")
+    @GetMapping("/dept/list")
+    public List<Department> list() {
         return restTemplate.getForObject(REST_URL_PREFIX + "/dept/list", List.class);
     }
 }
@@ -559,7 +641,7 @@ public class DepartmentConsumer_Controller{
 @SpringBootApplication
 public class Department_Consumer_80_App {
     public static void main(String[] args){
-        SpringApplication.run(Department_Consumer_80_App.calss, args);
+        SpringApplication.run(Department_Consumer_80_App.class, args);
     }
 }
 ```
@@ -573,3 +655,93 @@ public class Department_Consumer_80_App {
     - 节点启动之后,在`Eureka Server`中注册,服务节点信息保存在`Eureka Server`的服务注册表中.
 - 系统中的微服务使用`Eureka Client`连接`Eureka Server`并维持心跳连接
     - 客户端有一个内置的使用轮循(`round-robin`)算法的负载均衡器,在服务启动后,向服务器发心跳(默认周期`30s`),如果服务器在若干个周期内没有收到某个节点的心跳,服务器将会将该服务从服务注册表中移除(默认`90s`).
+
+## 1 创建Eureka Server工程
+
+1. 创建工程: `Maven Module` ==> `Parent Project: microservicecloud` ==> `artifact Id: microservicecloud-eureka-server-7001` ==> `packaging: jar` ==> `Finish`
+
+2. 编写`pom.xml`文件
+
+```
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-eureka-server</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>springloaded</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+    </dependency>
+</dependencies>
+```
+
+3. 编写`application.yaml`文件
+
+```
+server:
+    port: 7001
+eureka:
+    instance:
+        hostname: localhost                                                         # Eureka服务端实例名称
+    client:
+        register-with-eureka: false                                                 # 不向注册中心注册服务端
+        fetch-registry: false                                                       # 服务中心不需要检索服务
+        service-url::
+        defaultZone: http://${eureka.instance.appname}:${server.port}/eureka        # 设置 Eureka Server 交互的地址查询服务和注册服务
+```
+
+4. 创建主程序类,并添加`@EnableEurekaServer`注解启动`Eureka Server`
+
+```
+@EnableEurekaServer
+@SpringBootApplication
+public class EurekaServer_7001_Application {
+    public static void main(String[] args){
+        SpringApplication.run(EurekaServer_7001_Application.class, args);
+    }
+}
+```
+
+5. 注册服务到`Eureka Server`
+    - 客户端的`pom.xml`文件添加依赖
+        ```
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-eureka</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-config</artifactId>
+            </dependency>
+            <!-- 服务info -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-actuator</artifactId>
+            </dependency>
+        </dependencies>
+        ```
+    - 客户端`application.yaml`文件添加`Eureka Client`配置
+        ```
+        eureka:
+            instance:
+                instance-id: microservercloud-8001          # 设置服务名称
+                prefer-ip-address: true                     # 服务访问路径显示IP地址
+            client:
+                server-url: 
+                    defaultZone: http://localhost:7001/eureka
+        ```
+    - 客户端主程序类添加`@EnableEurekaClient`注解
+        ```
+        @EnableEurekaClient
+        @SpringBootApplication
+        public class Provider_8001_Application {
+            public static void main(String[] args) {
+                SpringApplication.run(Provider_8001_Application.class, args);
+            }
+        }
+        ```
