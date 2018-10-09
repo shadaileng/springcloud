@@ -23,3 +23,10 @@ spring:
       initial-size: 5
       max-total: 5
       max-wait-millis: 200
+eureka:
+  instance:
+    appname: serviceprovider-8001
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka

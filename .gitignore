@@ -14,8 +14,10 @@
 ### IntelliJ IDEA ###
 .idea
 .idea/
+.idea/*
 *.iws
 *.iml
+*/*.iml
 *.ipr
 
 ### NetBeans ###
