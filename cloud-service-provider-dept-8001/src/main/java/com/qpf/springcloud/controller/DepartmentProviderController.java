@@ -12,7 +12,7 @@ public class DepartmentProviderController {
     @Autowired
     private DepartmentService service;
 
-    @PostMapping("/dept/add")
+    @RequestMapping(value = "/dept/add", method = RequestMethod.POST)
     public boolean add(@RequestBody Department department) {
         return service.add(department);
     }
@@ -24,7 +24,6 @@ public class DepartmentProviderController {
 
     @GetMapping("/dept/list")
     public List<Department> list() {
-        System.out.println("/dept/list");
         return service.list();
     }
 }
