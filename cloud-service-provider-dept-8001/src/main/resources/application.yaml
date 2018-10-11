@@ -15,7 +15,7 @@ spring:
 #    password: root
 #    username: root
     driver-class-name: org.sqlite.JDBC
-    url: jdbc:sqlite::resource:data/demo.db
+    url: jdbc:sqlite:data/demo.db # jar包同级目录下的/data/demo.db文件
     username:
     password:
     dbcp2:
@@ -30,3 +30,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:7001/eureka
+info:
+  app.name: ${spring.application.name}
+  app.port: ${server.port}
+  app.artifactId: $project.artifactId$
+  app.version: $project.version$
